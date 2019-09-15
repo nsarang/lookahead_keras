@@ -3,7 +3,7 @@
 ## Reference
 Michael R. Zhang, James Lucas, Geoffrey Hinton, Jimmy Ba. **Lookahead Optimizer: k steps forward, 1 step back.** [[Arxiv](https://arxiv.org/abs/1907.08610)]
 
-## Usage:
+## Usage
 ```python
 from keras.optimizers import SGD
 from lookahead import Lookahead
