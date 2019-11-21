@@ -4,7 +4,9 @@ import tensorflow as tf
 
 
 class Lookahead(keras.optimizers.Optimizer):
-    def __init__(self, optimizer, k=5, alpha=0.5):
+    def __init__(self, optimizer, k=5, alpha=0.5, **kwargs):
+        super(Lookahead, self).__init__(**kwargs)
+        
         with K.name_scope(self.__class__.__name__):
             self.k = K.constant(k, dtype="int64")
             self.alpha = K.constant(alpha, dtype="float32")
