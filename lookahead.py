@@ -3,11 +3,10 @@ import keras.backend as K
 import tensorflow as tf
 
 
-
 class Lookahead(keras.optimizers.Optimizer):
     def __init__(self, optimizer, k=5, alpha=0.5, **kwargs):
         super(Lookahead, self).__init__(**kwargs)
-        
+
         with K.name_scope(self.__class__.__name__):
             self.k = K.constant(k, dtype="int64")
             self.alpha = K.constant(alpha, dtype="float32")
@@ -33,7 +32,7 @@ class Lookahead(keras.optimizers.Optimizer):
 
         self.updates = [K.update_add(self.iterations, 1)]
         self.updates += other_ops
-        
+
         with tf.control_dependencies([self.updates[0]]):
             condition = K.equal(self.iterations % self.k, 0)
             for fast_w, slow_w in zip(params, self.slow_weights):
@@ -56,14 +55,14 @@ class Lookahead(keras.optimizers.Optimizer):
 
     def get_config(self):
         config = {
-            'optimizer': keras.optimizers.serialize(self.opt),
+            "optimizer": keras.optimizers.serialize(self.opt),
             "k": int(K.get_value(self.k)),
             "alpha": float(K.get_value(self.alpha)),
         }
         base_config = super(Lookahead, self).get_config()
         return dict(list(base_config.items()) + list(config.items()))
-    
+
     @classmethod
     def from_config(cls, config):
-        optimizer = keras.optimizers.deserialize(config.pop('optimizer'))
+        optimizer = keras.optimizers.deserialize(config.pop("optimizer"))
         return cls(optimizer, **config)
