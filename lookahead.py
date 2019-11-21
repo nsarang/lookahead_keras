@@ -14,6 +14,13 @@ class Lookahead(keras.optimizers.Optimizer):
             self.iterations = K.variable(0, dtype="int64", name="iterations")
         self.opt = optimizer
 
+    @property
+    def lr(self):
+        return self.opt.lr
+
+    @lr.setter
+    def lr(self, lr):
+        self.opt.lr = lr
 
     def get_updates(self, loss, params):
         with K.name_scope(self.__class__.__name__):
